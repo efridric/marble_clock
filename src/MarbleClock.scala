@@ -11,15 +11,16 @@ object MarbleClock {
 		
 		//Second tray holds 2 marbles emptied same way as the first (Stack) (Represents 5min intervals)
 		
-		//Third tray holds 4 marbles (Stack) (Represents 15min intervals)
+		//Third tray holds 3 marbles (Stack) (Represents 15min intervals)
 		
 		//Fourth tray holds 11 marbles (Stack) (Represents 1hr intervals)
 						
-		val stackTrays = List[StackTray](new StackTray("Top-Tray", 4), new StackTray("Second-Tray", 2), new StackTray("Third-Tray", 4), new StackTray("Fourth-Tray", 11))
+		val stackTrays = List[StackTray](new StackTray("Top-Tray", 4), new StackTray("Second-Tray", 2), new StackTray("Third-Tray", 3), new StackTray("Fourth-Tray", 11))
 		val queueTray = QueueTray.sizePrompt()
+		val compareTray = QueueTray.sizePrompt()
 				
 		//For debugging 
-		for(i <- 0 until 25){
+		for(i <- 0 until 1500){
 		  println("<--------------- Iteration "+i+" --------------------->")
 		  incrementByOne
 		  stackTrays.foreach(x => println(x.name + ": "+x.theTray.mkString(", ")))
@@ -29,11 +30,18 @@ object MarbleClock {
 		
 		def incrementByOne = {
 		  val temp = check
-		  stackTrays(temp).theTray.push(queueTray.dequeue)
+		  if(temp != 4)
+			stackTrays(temp).theTray.push(queueTray.dequeue)
+		    
 		  for(i <- 0 until temp){
 		    for(j <- 0 until stackTrays(i).maxLength)
 		      queueTray.enqueue(stackTrays(i).theTray.pop)	      
 		  }
+		  
+		  if(temp == 4){
+		    queueTray.enqueue(queueTray.dequeue) 
+		  }
+		  
 		}
 		
 		def check: Int = {
@@ -41,7 +49,7 @@ object MarbleClock {
 			  if(!stackTrays(i).isFull)
 			    return i
 			}
-		  return 5;
+		  return 4;
 		}
 		
 	}
@@ -52,8 +60,8 @@ case class StackTray(name: String, maxLength: Int) {
 	
 	def isFull : Boolean = {
 	  if (theTray.size == maxLength)
-	    return true;
-	  return false;
+	    return true
+	  return false
 	}
 }
 
