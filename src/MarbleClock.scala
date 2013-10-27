@@ -17,7 +17,6 @@ object MarbleClock {
 						
 		val stackTrays = List[StackTray](new StackTray("Top-Tray", 4), new StackTray("Second-Tray", 2), new StackTray("Third-Tray", 3), new StackTray("Fourth-Tray", 11))
 		val queueTray = QueueTray.sizePrompt()
-		val compareTray = QueueTray.sizePrompt()
 				
 		//For debugging 
 		for(i <- 0 until 1500){
