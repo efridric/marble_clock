@@ -2,9 +2,7 @@ import scala.collection.mutable.Queue
 import scala.collection.mutable.Stack
 
 object MarbleClock {
-	def main(args: Array[String]) {
-		println("Thank god this is not c++")
-		
+	def main(args: Array[String]) {		
 		//Bottom tray(5th tray) is a queue this is where the marbles wait to be processed
 		
 		//Top tray has 4 marbles this is a stack and when its full the stack dumps back down to the bottom queue tray (Stack) (Represents 1min intervals)
@@ -19,7 +17,7 @@ object MarbleClock {
 		val queueTray = QueueTray.sizePrompt()
 				
 		//For debugging 
-		for(i <- 0 until 1500){
+		for(i <- 0 until 15){
 		  println("<--------------- Iteration "+i+" --------------------->")
 		  incrementByOne
 		  stackTrays.foreach(x => println(x.name + ": "+x.theTray.mkString(", ")))
