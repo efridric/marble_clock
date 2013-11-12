@@ -1,5 +1,5 @@
 /**
- * MarbleClock.scala
+ * Author: Eric Fridrich
  * 
  * Bottom tray(5th tray) is a queue this is where the marbles wait to be processed
  * Top tray has 4 marbles this is a stack and when its full the stack dumps back down to the bottom queue tray (Stack) (Represents 1min intervals)
@@ -15,16 +15,17 @@ object MarbleClock {
 	def main(args: Array[String]) {				
 		val stackTrays = List[StackTray](new StackTray("Top-Tray", 4), new StackTray("Second-Tray", 2), new StackTray("Third-Tray", 3), new StackTray("Fourth-Tray", 11))
 		val queueTray = QueueTray.sizePrompt()
-		
+		var iterations = 0
+				
 		/**
-		 * Method signature of everyInterval is int, int, function set second int to 1000 for every second iterations and 60000 for every minute
-		 * Use Timer.iterations as first argument to start the iterations at 0
+		 * Method signature of everyInterval is int, function set int to 1000 for every second iterations and 60000 for every minute
 		 */
-		Timer.everyInterval(Timer.iterations, 1000, () => {
-		  println("<--------------------- Time Iteration "+(Timer.iterations+1)+" --------------------->")
+		Timer.everyInterval(1000, () => {
+		  println("<--------------------- Time Iteration "+(iterations+1)+" --------------------->")
 		  incrementByOne
 		  stackTrays.foreach(x => println(x.name + ": "+x.theTray.mkString(", ")))
 		  println("Bottom-Tray: "+queueTray.mkString(", ")+"\n")
+		  iterations += 1
 		})
 				
 		def incrementByOne = {
@@ -72,11 +73,8 @@ object QueueTray {
 }
 
 object Timer {
-  var iterations = 0
-  def everyInterval(i: Int, sleepTime: Int, f: () => Unit) : Int = {
+  def everyInterval(sleepTime: Int, f: () => Unit) {
     while (true) { f(); Thread sleep sleepTime }
-    iterations += 1
-    return iterations
   } 
 }
 
